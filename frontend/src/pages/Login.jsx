@@ -11,9 +11,11 @@ import {
 import {LockOutlined} from "@mui/icons-material";
 import {useLoginMutation} from "../redux/apis/Auth/index.js";
 import {useDispatch} from "react-redux";
+import {setAuth} from "../redux/slices/authSlice.jsx";
 
 const Login = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [login, { isLoading }] = useLoginMutation();
     const [credentials, setCredentials] = useState({ email: '', password: '' });
     const handleChange = (e) => {
@@ -23,10 +25,15 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await login(credentials).unwrap();
-            const { data } = await refetch();
-            console.log(data);
-            alert('Login successful!');
+            const response = await login(credentials).unwrap();
+            // Extract user and token from response
+            const { token, user } = response;
+
+            // Dispatch to Redux and store token
+            dispatch(setAuth({ user, token }));
+
+            // Redirect to tasks page
+            navigate('/tasks');
         } catch (error) {
             alert(error?.data?.message || 'Login failed');
         }
@@ -57,6 +64,7 @@ const Login = () => {
                             fullWidth
                             margin="normal"
                             type="email"
+                            name="email"
                             onChange={handleChange}
                             required
                         />
@@ -67,6 +75,7 @@ const Login = () => {
                             fullWidth
                             margin="normal"
                             type="password"
+                            name="password"
                             onChange={handleChange}
                             required
                         />

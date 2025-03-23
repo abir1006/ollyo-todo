@@ -5,6 +5,7 @@ import Tasks from "./pages/Tasks";
 import {Provider} from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import store from "./redux/store";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 const queryClient = new QueryClient();
 function App() {
@@ -15,7 +16,10 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Navigate to="/login"/>}/>
                         <Route path="/login" element={<Login/>}/>
-                        <Route path="/tasks" element={<Tasks/>}/>
+                        {/* Protected Routes */}
+                        <Route element={<ProtectedRoute />}>
+                            <Route path="/tasks" element={<Tasks />} />
+                        </Route>
                     </Routes>
                 </Router>
             </QueryClientProvider>

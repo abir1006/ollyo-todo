@@ -57,10 +57,12 @@ class AuthController extends Controller
 
             $token = $user->createToken('Ollyo-todo')->plainTextToken;
             return response()->json([
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'access_token' => $token,
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email
+                ],
+                'token' => $token,
                 'token_type' => 'Bearer',
             ]);
 

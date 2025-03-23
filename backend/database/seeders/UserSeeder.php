@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
         DB::table('users')->truncate();
 
         User::factory()->create([
-            'name' => 'Test User',
+            'name' => 'John Doe',
             'email' => 'test@example.com',
             'password' => Hash::make('123'),
         ]);
