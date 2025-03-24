@@ -71,4 +71,14 @@ class AuthController extends Controller
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
 
+    public function logout(Request $request): \Illuminate\Http\JsonResponse
+    {
+        // Revoke the current user's token
+        $request->user()->tokens()->delete();
+
+        return response()->json([
+            'message' => 'Logged out successfully'
+        ]);
+    }
+
 }

@@ -7,6 +7,14 @@ export const authApiService = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
         baseUrl,
+        prepareHeaders: (headers, { getState }) => {
+            // Get token from Redux store
+            const token = getState().auth.token;
+            if (token) {
+                headers.set("Authorization", `Bearer ${token}`);
+            }
+            return headers;
+        },
         credentials: 'include'}),
 
     endpoints: (builder) => ({
@@ -17,7 +25,7 @@ export const authApiService = createApi({
                 body: credentials,
             })
         }),
-        logout: builder.mutation({
+        logoutApi: builder.mutation({
             query: () => ({
                 url: '/logout',
                 method: 'POST',
@@ -28,5 +36,5 @@ export const authApiService = createApi({
 
 export const {
     useLoginMutation,
-    useLogoutMutation,
+    useLogoutApiMutation,
 } = authApiService
