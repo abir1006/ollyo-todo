@@ -53,8 +53,8 @@ const Login = () => {
                     <Box display="flex" justifyContent="center" mb={2}>
                         <LockOutlined color="primary" fontSize="large"/>
                     </Box>
-                    <Typography variant="h5" gutterBottom>
-                        Login
+                    <Typography variant="h6" gutterBottom>
+                        Welcome to Task Manager App <br/> Login with default user & password
                     </Typography>
                     <form onSubmit={handleSubmit}>
                         <TextField
@@ -65,6 +65,7 @@ const Login = () => {
                             margin="normal"
                             type="email"
                             name="email"
+                            defaultValue="test@example.com"
                             onChange={handleChange}
                             required
                         />
@@ -76,6 +77,7 @@ const Login = () => {
                             margin="normal"
                             type="password"
                             name="password"
+                            defaultValue="123"
                             onChange={handleChange}
                             required
                         />
