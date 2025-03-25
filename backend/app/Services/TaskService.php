@@ -30,13 +30,14 @@ class TaskService
     {
         $query = Task::query();
 
-        // Search by name
         if (!empty($filters['search'])) {
-            $query->where('name', 'LIKE', '%' . $filters['search'] . '%');
+            $searchTerm = '%' . $filters['search'] . '%';
+            $query->where('name', 'LIKE', $searchTerm);
+                //->orWhere('description', 'LIKE', $searchTerm);
         }
 
         // Filter by status (To Do, In Progress, Done)
-        if (!empty($filters['status'])) {
+        if (!empty($filters['status']) && $filters['status'] !== 'All') {
             $query->where('status', $filters['status']);
         }
 
@@ -51,7 +52,7 @@ class TaskService
         $query->orderBy($sortBy, $sortOrder);
 
         // Paginate results (default: 10 items per page)
-        return $query->paginate($filters['per_page'] ?? 10);
+        return $query->paginate($filters['perPage'] ?? 10);
     }
 
 //    public function getAllTasks()

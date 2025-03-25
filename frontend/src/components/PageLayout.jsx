@@ -11,7 +11,7 @@ const PageLayout = ({ children }) => {
             alignItems="top"
         >
             <Container maxWidth="xl">
-                <Paper elevation={3} sx={{ padding: 4, marginTop: "15px"}}>
+                <Paper elevation={3} sx={{ padding: 4, marginTop: "15px", marginBottom: "15px"}}>
                     {children}
                 </Paper>
             </Container>

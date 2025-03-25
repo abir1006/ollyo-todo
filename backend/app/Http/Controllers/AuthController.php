@@ -51,9 +51,9 @@ class AuthController extends Controller
             $user = Auth::user();
 
             // Revoke all existing tokens
-            $user->tokens->each(function ($token) {
-                $token->delete();
-            });
+//            $user->tokens->each(function ($token) {
+//                $token->delete();
+//            });
 
             $token = $user->createToken('Ollyo-todo')->plainTextToken;
             return response()->json([

@@ -1,29 +1,31 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 
-const baseUrl = `${process.env.REACT_APP_BASE_URL}/tasks/`
+const baseUrl = import.meta.env.VITE_API_URL;
 
 export const taskApiService = createApi({
     reducerPath: 'taskApi',
     baseQuery: fetchBaseQuery({
         baseUrl,
-        prepareHeaders: (headers, {getState}) => {
-            const token = getState().authSlice.token
-
-            headers.set('Authorization', `Bearer ${token}`)
-
-            return headers
-        }
+        prepareHeaders: (headers, { getState }) => {
+            // Get token from Redux store
+            const token = getState().auth.token;
+            if (token) {
+                headers.set("Authorization", `Bearer ${token}`);
+            }
+            return headers;
+        },
+        credentials: 'include'
     }),
     endpoints: (builder) => ({
         getTasks: builder.query({
             query: (args) => {
-                let {id, currentPage, itemsPerPage, search, sortBy} = args
+                let {id, page, perPage, search, filterStatus, sortBy} = args
 
                 if (id) {
                     return `tasks`
                 }
 
-                return `tasks?page=${currentPage}&rowsPerPage=${itemsPerPage}&role=${role}${(search && search !== '') ? `&search=${search}` : ``}${(sortBy && sortBy !== '') ? `&sortBy=${sortBy}` : ``}`
+                return `tasks?page=${page}&perPage=${perPage}${(search && search !== '') ? `&search=${search}` : ``}${(filterStatus && filterStatus !== '') ? `&status=${filterStatus}` : ``}${(sortBy && sortBy !== '') ? `&sortBy=${sortBy}` : ``}`
             },
             keepUnusedDataFor: 0
         }),
