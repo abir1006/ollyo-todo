@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # Laravel Backend Service
+  backend:
+    build:
+      context: ./backend  # Path to your Laravel backend directory
+    container_name: ollyo-task-app-backend
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+      - ./backend/vendor:/var/www/vendor  # Optional: Share vendor directory if using composer
+    environment:
+      - APP_ENV=local
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=ollyo-todo
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"  # Expose Laravel on port 8000
+    command: ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+
+  # MySQL Database Service
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ollyo-todo
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"  # Expose MySQL on port 3306
+    volumes:
+      - db-data:/var/lib/mysql  # Persist MySQL data between container restarts
+
+  # ReactJS Frontend Service
+  frontend:
+    build:
+      context: ./frontend  # Path to your ReactJS frontend directory
+    container_name: ollyo-task-app-frontend
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules  # Prevent overwriting node_modules on re-build
+    ports:
+      - "3000:3000"  # Expose React on port 3000
+    depends_on:
+      - backend
+    command: ["npm", "start"]
+
+volumes:
+  db-data:
+    driver: local
