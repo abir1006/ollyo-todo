@@ -35,7 +35,7 @@ COPY .env.example .env
 RUN php artisan key:generate
 
 # Expose port 8080 for local development
-EXPOSE 8080
+EXPOSE 8000
 
 # Command to run Laravel locally (PHP built-in server)
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=80"]
