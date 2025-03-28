@@ -28,9 +28,6 @@ COPY . .
 # Install Laravel dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-cache
 
-# Configure environment variables for local environment
-COPY .env.example .env
-
 # Install the Laravel key (for encryption and security)
 RUN php artisan key:generate
 

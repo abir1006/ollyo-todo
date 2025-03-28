@@ -4,6 +4,10 @@ FROM node:18-alpine AS build
 # Set working directory inside the container
 WORKDIR /app
 
+# Accept build-time environment variables
+ARG VITE_API_URL
+ENV VITE_API_URL="http://65.1.1.44/api"
+
 # Copy package.json and package-lock.json first (for efficient caching)
 COPY package.json package-lock.json ./
 
@@ -30,6 +34,10 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80 for serving
 EXPOSE 80
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Start Nginx server
 CMD ["nginx", "-g", "daemon off;"]

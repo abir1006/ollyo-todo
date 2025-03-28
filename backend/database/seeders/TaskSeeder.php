@@ -19,7 +19,7 @@ class TaskSeeder extends Seeder
 
         DB::table('tasks')->truncate(); // Optional: Clears table before seeding
 
-        for ($i = 1; $i <= 1000; $i++) { // Change 100 to any number for bulk data
+        for ($i = 1; $i <= 100; $i++) { // Change 100 to any number for bulk data
             Task::create([
                 'name' => $faker->sentence(3), // Generates a random task name
                 'description' => $faker->paragraph(2), // Generates a random description
