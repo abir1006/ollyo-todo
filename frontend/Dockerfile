@@ -35,9 +35,5 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Expose port 80 for serving
 EXPOSE 80
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
-
 # Start Nginx server
 CMD ["nginx", "-g", "daemon off;"]

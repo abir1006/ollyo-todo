@@ -25,14 +25,17 @@ WORKDIR /var/www
 # Copy the Laravel application into the container
 COPY . .
 
+RUN composer update fakerphp/faker
 # Install Laravel dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-cache
-
-# Install the Laravel key (for encryption and security)
-RUN php artisan key:generate
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-cache --verbose
 
 # Expose port 8080 for local development
 EXPOSE 8000
+
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Command to run Laravel locally (PHP built-in server)
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
