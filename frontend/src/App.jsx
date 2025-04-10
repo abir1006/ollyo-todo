@@ -9,6 +9,7 @@ const queryClient = new QueryClient();
 
 const Login = lazy(() => import('./pages/Login.jsx'));
 const Tasks = lazy(() => import('./pages/Tasks.jsx'));
+const CreateTask = lazy(() => import('./pages/CreateTask.jsx'));
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                             <Route element={<ProtectedRoute/>}>
                                 <Route path="/tasks" element={<Tasks/>}/>
                             </Route>
+                            <Route path="/create-task" element={<CreateTask />} />
                         </Routes>
                     </Suspense>
                 </Router>

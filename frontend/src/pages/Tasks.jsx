@@ -6,6 +6,7 @@ import Header from "../components/Header.jsx";
 import SearchFilter from "../components/SearchFilter.jsx";
 import TaskList from "../components/TaskList.jsx";
 import {useGetTasksQuery} from "../redux/apis/Task/index.js";
+import {useNavigate} from "react-router-dom";
 
 
 const Tasks = () => {
@@ -15,6 +16,7 @@ const Tasks = () => {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [filterStatus, setFilterStatus] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         setPage(1)
@@ -45,7 +47,7 @@ const Tasks = () => {
                 variant="contained"
                 color="primary"
                 startIcon={<AddCircleIcon/>}
-                onClick=""
+                onClick={() => navigate("/create-task")}
                 sx={{width: "200px", marginBottom: "15px"}}>
                 Add Task
             </Button>

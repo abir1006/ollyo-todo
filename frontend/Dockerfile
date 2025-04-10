@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Accept build-time environment variables
 ARG VITE_API_URL
-ENV VITE_API_URL="http://65.1.1.44/api"
+ENV VITE_API_URL="http://65.0.100.21/api"
 
 # Copy package.json and package-lock.json first (for efficient caching)
 COPY package.json package-lock.json ./
